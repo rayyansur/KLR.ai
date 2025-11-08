@@ -1,0 +1,9 @@
+flask
+flask-cors
+opencv-python
+onnxruntime
+numpy
+python-dotenv
+ultralytics
+Pillow
+openai
