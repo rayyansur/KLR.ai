@@ -6,13 +6,14 @@ def getObjects(image):
     model = YOLO("../model/yolov8n.pt")
 
     r = model(image)[0]
-
+    objects = []
     for box in r.boxes:
         cls_id = int(box.cls)
         conf = float(box.conf)
         x1, y1, x2, y2 = box.xyxy[0]  # tensor -> [x1, y1, x2, y2]
+        objects.append({r.names[cls_id], conf, x1, y1, x2, y2})
 
-        return r.names[cls_id], conf, x1, y1, x2, y2
+    return {"Objects": objects}
 
 
 def main():
