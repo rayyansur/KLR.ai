@@ -10,16 +10,6 @@ from .yolo_detector import yolo_detect
 from .azure_ai_responder import azure_respond, azure_auto_detect
 
 def process_query(text_query: str, image_path: str) -> dict:
-    """
-    Process user query with provided image.
-    
-    Args:
-        text_query: User's text query
-        image_path: Path to the image file
-    
-    Returns:
-        Dictionary with response_text
-    """
     # Run YOLO detection
     yolo_results = yolo_detect(image_path)
     detections = yolo_results.get("detections", [])
@@ -45,15 +35,6 @@ def process_query(text_query: str, image_path: str) -> dict:
 
 
 def process_auto_detect(image_path: str) -> dict:
-    """
-    Process automatic detection with provided image.
-    
-    Args:
-        image_path: Path to the image file
-    
-    Returns:
-        Dictionary with response_text
-    """
     # Run YOLO detection
     yolo_results = yolo_detect(image_path)
     detections = yolo_results.get("detections", [])

@@ -43,7 +43,7 @@ def create_prompt(detections, depth_data, query, is_auto_detect):
         if not query:
             raise ValueError("Query is required for regular mode")
         prompt = f"""
-        Follow the system instructions provided earlier.
+        Respond based on the context and data provided below.
 
         ### USER QUERY:
         {query}
