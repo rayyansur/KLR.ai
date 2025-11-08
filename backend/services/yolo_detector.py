@@ -12,26 +12,23 @@ def yolo_detect(image_path: str):
     results = model.predict(image_path, verbose=False)
     result = results[0]
 
-    detections = []
-    for box in result.boxes:
+    objects = []
+    for box in results.boxes:
         cls_id = int(box.cls[0])
         conf = float(box.conf[0])
-        xywhn = box.xywhn[0].tolist()  # normalized [x_center, y_center, w, h]
-        label = result.names[cls_id]
-
-        detections.append({
-            "class": label,
+        x1, y1, x2, y2 = box.xyxy[0]  # tensor -> [x1, y1, x2, y2]
+        objects.append({
+            "class": results.names[cls_id],
             "confidence": round(conf, 3),
             "position": {
-                "x_center": round(xywhn[0], 4),
-                "y_center": round(xywhn[1], 4),
-                "width": round(xywhn[2], 4),
-                "height": round(xywhn[3], 4)
+                "x1": x1,
+                "y1": y1,
+                "x2": x2,
+                "y2": y2
             }
         })
 
-    return {"detections": detections}
-
+    return {"Objects": objects}
 
 # Example standalone test
 if __name__ == "__main__":
