@@ -35,7 +35,7 @@ def main():
     print("Press 'q' to quit.")
 
     while True:
-        time.sleep(5)
+        time.sleep(2)
 
         ret, frame = cap.read()
         if not ret:
