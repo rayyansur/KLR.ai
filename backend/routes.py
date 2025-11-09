@@ -58,7 +58,7 @@ def handle_auto_detect():
 
     if result["response_text"] == "Not applicable":
         print(result["response_text"])
-        return jsonify({"result": "Not applicable"}), 200
+        return jsonify({"result": ""}), 200
 
     return jsonify({"result": result["response_text"]}), 200
 

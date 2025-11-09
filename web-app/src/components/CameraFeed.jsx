@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { sendAutoDetect, API_BASE} from "../api";
+import { sendAutoDetect } from "../api";
 import "../App.css";
 
 export default function CameraFeed({ onCapture, onAction }) {
@@ -51,7 +51,7 @@ export default function CameraFeed({ onCapture, onAction }) {
     const interval = setInterval(() => {
       captureFrame();
       onAction && onAction();
-    }, 20000); // 5000 ms = 5 seconds
+    }, 30000); // 5000 ms = 5 seconds
 
     return () => clearInterval(interval); // cleanup when component unmounts
   }, [onAction]);

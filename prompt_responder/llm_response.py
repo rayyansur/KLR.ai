@@ -18,7 +18,8 @@ if not deployment:
 client = AzureOpenAI(
     api_version="2024-12-01-preview",
     azure_endpoint=endpoint,
-    api_key=api_key
+    api_key=api_key,
+    timeout=120
 )
 
 ASSISTANT_ID_REGULAR = os.getenv("AGENT_REGULAR_ID")
