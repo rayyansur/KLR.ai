@@ -3,13 +3,14 @@ import React, { useState, useEffect } from "react";
 import { checkHealth } from "./api";
 import CameraFeed from "./components/CameraFeed";
 import AudioInterface from "./components/AudioInterface";
+import "./App.css";
 
 export default function App() {
   const [latestImage, setLatestImage] = useState(null);
   const [healthStatus, setHealthStatus] = useState(null);
   const [error, setError] = useState(null);
 
-  // Check health on component mount
+  // Check backend health
   useEffect(() => {
     const checkBackendHealth = async () => {
       try {
@@ -38,34 +39,34 @@ export default function App() {
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
-      <h1>KLR Vision Assistant</h1>
+      <div className="app-container">
+        {/* Header */}
+        <header className="app-header">
+          <h1>KLR Vision Assistant</h1>
+        </header>
 
-      {error && (
-        <div style={{ 
-          margin: "1rem auto", 
-          padding: "1rem", 
-          backgroundColor: "#fee", 
-          color: "#c00",
-          borderRadius: "4px",
-          maxWidth: "600px"
-        }}>
-          ⚠️ {error}
-        </div>
-      )}
+        {/* Error Banner */}
+        {error && (
+            <div className="error-banner">
+              ⚠️ {error}
+            </div>
+        )}
 
-      {/* Camera and audio now trigger the same health check */}
-      <CameraFeed onCapture={setLatestImage} onAction={handleComponentClick} />
-      <AudioInterface
-        latestImage={latestImage}
-        onAction={handleComponentClick}
-      />
+        {/* Camera Feed */}
+        <CameraFeed onCapture={setLatestImage} onAction={handleComponentClick} />
 
-      {healthStatus && (
-        <p style={{ marginTop: "1rem" }}>
-          🩺 Flask backend status: <strong>{healthStatus}</strong>
-        </p>
-      )}
-    </div>
+        {/* Audio Interface */}
+        <AudioInterface
+            latestImage={latestImage}
+            onAction={handleComponentClick}
+        />
+
+        {/* Health Status */}
+        {healthStatus && (
+            <div className="health-status">
+              🩺 Flask backend status: <strong>{healthStatus}</strong>
+            </div>
+        )}
+      </div>
   );
 }

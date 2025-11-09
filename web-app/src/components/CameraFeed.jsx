@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { sendAutoDetect } from "../api";
+import "../App.css"; // make sure this is imported
 
 export default function CameraFeed({ onCapture, onAction }) {
   const [result, setResult] = useState(null);
@@ -31,11 +32,11 @@ export default function CameraFeed({ onCapture, onAction }) {
       onCapture && onCapture(blob);
       try {
         const response = await sendAutoDetect(blob);
-        console.log(response["result"])
-        const audioResponse = await fetch('http://127.0.0.1:5000/text-to-speech', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: response["result"] })
+        console.log(response["result"]);
+        await fetch("http://127.0.0.1:5000/text-to-speech", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: response["result"] }),
         });
       } catch (err) {
         console.error("Auto-detect error:", err);
@@ -44,26 +45,27 @@ export default function CameraFeed({ onCapture, onAction }) {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <video ref={videoRef} autoPlay playsInline width="320" height="240" />
-      <div>
-        <button
-          onClick={() => {
-            captureFrame();
-            onAction && onAction(); // still triggers health check
-          }}
-        >
-          Capture Frame
-        </button>
-      </div>
-      {result && (
-        <div style={{ marginTop: "1rem" }}>
-          <strong>Auto-detect result:</strong>
-          <pre style={{ textAlign: "left", display: "inline-block" }}>
+      <div style={{ textAlign: "center" }}>
+        <video ref={videoRef} autoPlay playsInline width="320" height="240" />
+        <div>
+          <button
+              className="capture-button"
+              onClick={() => {
+                captureFrame();
+                onAction && onAction();
+              }}
+          >
+            Capture Frame
+          </button>
+        </div>
+        {result && (
+            <div style={{ marginTop: "1rem" }}>
+              <strong>Auto-detect result:</strong>
+              <pre style={{ textAlign: "left", display: "inline-block" }}>
             {JSON.stringify(result, null, 2)}
           </pre>
-        </div>
-      )}
-    </div>
+            </div>
+        )}
+      </div>
   );
 }

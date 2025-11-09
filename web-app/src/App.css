@@ -1,0 +1,278 @@
+/* App.css - Vibrant Blue Theme inspired by waveform image */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #0a0e27;
+  min-height: 100vh;
+  color: #ffffff;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00AAFF 0%, #0066FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.error-banner {
+  margin: 1rem auto;
+  padding: 0.875rem 1.25rem;
+  background: #ff4444;
+  color: white;
+  border-radius: 8px;
+  max-width: 600px;
+  font-weight: 500;
+  border: 1px solid #ff6666;
+}
+
+.health-status {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 170, 255, 0.1);
+  border: 1px solid rgba(0, 170, 255, 0.3);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.health-status strong {
+  color: #00AAFF;
+  font-weight: 600;
+}
+
+/* Camera Feed Styles */
+.camera-feed-container {
+  text-align: center;
+  margin-bottom: 1rem;
+  background: #1a1f3a;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 2px solid rgba(0, 170, 255, 0.3);
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 4px 16px rgba(0, 170, 255, 0.2);
+}
+
+.video-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 16px rgba(0, 170, 255, 0.5);
+  border: 2px solid #00AAFF;
+  max-height: 240px;
+}
+
+.video-wrapper video {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  max-height: 240px;
+  height: auto;
+  background: #000;
+  object-fit: cover;
+}
+
+.camera-controls {
+  margin-top: 0.75rem;
+}
+
+.capture-button {
+  background: #00AAFF;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 170, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.capture-button:hover {
+  background: #0099EE;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 170, 255, 0.6);
+}
+
+.capture-button:active {
+  transform: translateY(0);
+}
+
+/* API Response Display - Between camera and buttons */
+.api-response-container {
+  margin: 1rem 0;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(0, 170, 255, 0.15) 0%, rgba(0, 102, 255, 0.15) 100%);
+  border-radius: 12px;
+  border: 2px solid rgba(0, 170, 255, 0.4);
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  box-shadow: 0 4px 16px rgba(0, 170, 255, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.api-response-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 170, 255, 0.3);
+}
+
+.api-response-title {
+  color: #00AAFF;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.api-response-content {
+  color: #e0e0e0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.response-text {
+  background: rgba(0, 102, 255, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 3px solid #00AAFF;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #ffffff;
+}
+
+/* Audio Interface Styles */
+.audio-interface-container {
+  margin-top: 1rem;
+  text-align: center;
+  background: #1a1f3a;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 2px solid rgba(0, 170, 255, 0.3);
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 4px 16px rgba(0, 170, 255, 0.2);
+}
+
+.audio-button {
+  background: #00AAFF;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 170, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 180px;
+}
+
+.audio-button:hover {
+  background: #0099EE;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 170, 255, 0.6);
+}
+
+.audio-button.recording {
+  background: #ff4444;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(255, 68, 68, 0.8);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .camera-feed-container,
+  .audio-interface-container,
+  .api-response-container {
+    padding: 0.875rem;
+  }
+
+  .capture-button,
+  .audio-button {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .video-wrapper video {
+    max-width: 100%;
+  }
+
+  /* Capture Button */
+  .capture-button {
+    background-color: #2b6df3;
+    border: none;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.8rem;
+    box-shadow: 0 0 12px rgba(43, 109, 243, 0.6);
+    transition: all 0.3s ease;
+  }
+
+  .capture-button:hover {
+    background-color: #4788ff;
+    box-shadow: 0 0 20px rgba(43, 109, 243, 0.9);
+  }
+
+  .capture-button:active {
+    transform: scale(0.96);
+  }
+}
+
