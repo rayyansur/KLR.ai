@@ -1,9 +1,11 @@
-# Text-to-speech conversion using ElevenLabs API
+ # Text-to-speech conversion using ElevenLabs API (fixed PCM output)
 import os
+import tempfile
+import wave
+import simpleaudio as sa
 from dotenv import load_dotenv
 from elevenlabs.client import ElevenLabs
-from playsound import playsound
-import tempfile
+
 load_dotenv()
 
 api_key = os.getenv("ELEVENLABS_API_KEY")
@@ -12,8 +14,9 @@ if not api_key:
 
 elevenlabs = ElevenLabs(api_key=api_key)
 
-
 def text_to_speech(text: str, voice_id: str = "Qggl4b0xRMiqOwhPtVWT") -> bytes:
+    """Generate speech from text using ElevenLabs and play it via simpleaudio."""
+    # Get raw PCM data from ElevenLabs
     audio = elevenlabs.text_to_speech.convert(
         text=text,
         voice_id=voice_id,
@@ -21,8 +24,4 @@ def text_to_speech(text: str, voice_id: str = "Qggl4b0xRMiqOwhPtVWT") -> bytes:
         output_format="mp3_44100_128",
     )
     audio = b"".join(audio)
-
-    with tempfile.NamedTemporaryFile(delete=True, suffix=".mp3") as tmp:
-        tmp.write(audio)
-        tmp.flush()  # ensure all data is written
-        playsound(tmp.name)
+    return audio

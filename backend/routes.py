@@ -1,8 +1,8 @@
 import base64
 import tempfile
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, Response
 from flask_cors import CORS
-import sys, os
+import sys, os, traceback
 
 from services.orchestrator import process_query, process_auto_detect
 
@@ -11,8 +11,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from prompt_responder.text_to_speech import text_to_speech as tts
 
 routes = Blueprint('routes', __name__)
-CORS(routes)
-
 
 def decode_base64_image(base64_string: str) -> str:
     # Decode base64 string
@@ -28,7 +26,7 @@ def decode_base64_image(base64_string: str) -> str:
 @routes.route('/query', methods=['POST'])
 def handle_query():
     data = request.get_json()
-    text_query = data.get('query')
+    text_query = data.get('text')
     if not text_query or not isinstance(text_query, str):
         return jsonify({"error": "Query must be a non-empty string"}), 400
 
@@ -40,7 +38,7 @@ def handle_query():
     result = process_query(text_query, image_path)
     if image_path and os.path.exists(image_path):
         os.unlink(image_path)
-    return jsonify({"result": result}), 200
+    return jsonify({"result": result["response_text"]}), 200
 
 
 @routes.route('/auto-detect', methods=['POST'])
@@ -65,9 +63,21 @@ def health_check():
     return jsonify({"status": "healthy"}), 200
 
 
-@routes.route('/text-to-speech', methods=['POST'])
+@routes.route("/text-to-speech", methods=["POST"])
 def text_to_speech():
-    data = request.get_json()
-    text = data.get('text', '')
-    audio_path = tts(text)
-    return jsonify({"audio_path": audio_path})
+    try:
+        data = request.get_json()
+        text = data.get("text", "")
+        print(f"[TTS] Request text: {text}")
+
+        # Generate MP3 bytes from ElevenLabs
+        audio_bytes = tts(text)
+
+        # ✅ Return MP3 binary response
+        return Response(audio_bytes, mimetype="audio/mpeg")
+
+    except Exception as e:
+        print(f"[TTS ERROR] {e}")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+

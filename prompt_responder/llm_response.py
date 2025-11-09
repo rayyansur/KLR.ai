@@ -96,7 +96,7 @@ def ask_azure(prompt, assistant_id):
     try:
         response = client.chat.completions.create(
             messages=messages,
-            max_completion_tokens=512,
+            max_completion_tokens=1024,
             model=deployment,
         )
         # Log the raw response for debugging
