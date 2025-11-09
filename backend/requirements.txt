@@ -5,3 +5,7 @@ onnxruntime
 numpy
 python-dotenv
 ultralytics
+pytesseract
+Pillow
+tensorflow
+openai
