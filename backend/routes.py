@@ -73,6 +73,5 @@ def health_check():
 def text_to_speech():
     data = request.get_json()
     text = data.get('text', '')
-    print("AUDIO\n\n\n", text)
     audio_path = tts(text)
     return jsonify({"audio_path": audio_path})

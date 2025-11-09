@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { sendAutoDetect } from "../api";
+import { sendAutoDetect, API_BASE} from "../api";
 import "../App.css";
 
 export default function CameraFeed({ onCapture, onAction }) {
@@ -34,10 +34,7 @@ export default function CameraFeed({ onCapture, onAction }) {
       onCapture && onCapture(blob);
       try {
         const response = await sendAutoDetect(blob);
-        if (response["result"].equal("Not applicable")) {
-          return;
-        }
-        console.log(response["result"]);
+
         await fetch("http://127.0.0.1:5001/text-to-speech", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
