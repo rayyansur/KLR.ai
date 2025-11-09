@@ -38,11 +38,11 @@ export default function CameraFeed({ onCapture, onAction }) {
           return;
         }
         console.log(response["result"]);
-        /**await fetch("http://127.0.0.1:5000/text-to-speech", {
+        await fetch("http://127.0.0.1:5001/text-to-speech", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: response["result"] }),
-        });*/
+        });
       } catch (err) {
         console.error("Auto-detect error:", err);
       }
@@ -54,7 +54,7 @@ export default function CameraFeed({ onCapture, onAction }) {
     const interval = setInterval(() => {
       captureFrame();
       onAction && onAction();
-    }, 5000); // 5000 ms = 5 seconds
+    }, 20000); // 5000 ms = 5 seconds
 
     return () => clearInterval(interval); // cleanup when component unmounts
   }, [onAction]);

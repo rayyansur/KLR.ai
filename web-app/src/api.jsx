@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "http://127.0.0.1:5000"; // use 127.0.0.1 to match Flask exactly
+const API_BASE = "http://127.0.0.1:5001"; // use 127.0.0.1 to match Flask exactly
 
 export const checkHealth = async () => {
   try {

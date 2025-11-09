@@ -65,7 +65,7 @@ def process_auto_detect(image_path: str) -> dict:
                 break
 
         if not dangerous:
-            return {"result": "Not applicable"}
+            return {"response_text": "Not applicable"}
         print("[process_auto_detect] Depth data:", json.dumps(depth_data, indent=2))
 
         response_text = azure_auto_detect(

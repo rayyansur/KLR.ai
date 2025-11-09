@@ -52,13 +52,13 @@ def handle_auto_detect():
     image_path = decode_base64_image(base64_image)
 
     result = process_auto_detect(image_path)
-    if result["result"] == "Not applicable":
-        return jsonify({"result": "Not applicable"}), 200
-
-    print("Dangerous")
 
     if image_path and os.path.exists(image_path):
         os.unlink(image_path)
+
+    if result["response_text"] == "Not applicable":
+        print(result["response_text"])
+        return jsonify({"result": "Not applicable"}), 200
 
     return jsonify({"result": result["response_text"]}), 200
 
@@ -73,5 +73,6 @@ def health_check():
 def text_to_speech():
     data = request.get_json()
     text = data.get('text', '')
+    print("AUDIO\n\n\n", text)
     audio_path = tts(text)
     return jsonify({"audio_path": audio_path})
