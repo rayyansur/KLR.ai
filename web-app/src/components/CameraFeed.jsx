@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { sendAutoDetect } from "../api";
-import "../App.css"; // make sure this is imported
+import "../App.css";
 
 export default function CameraFeed({ onCapture, onAction }) {
   const [result, setResult] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(document.createElement("canvas"));
 
+  // Enable camera on mount
   useEffect(() => {
     const enableCamera = async () => {
       try {
@@ -19,7 +20,7 @@ export default function CameraFeed({ onCapture, onAction }) {
     enableCamera();
   }, []);
 
-  const captureFrame = () => {
+  const captureFrame = async () => {
     const video = videoRef.current;
     if (!video) return;
     const canvas = canvasRef.current;
@@ -27,37 +28,48 @@ export default function CameraFeed({ onCapture, onAction }) {
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext("2d");
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
     canvas.toBlob(async (blob) => {
       if (!blob) return;
       onCapture && onCapture(blob);
       try {
         const response = await sendAutoDetect(blob);
+        if (response["result"].equal("Not applicable")) {
+          return;
+        }
         console.log(response["result"]);
-        await fetch("http://127.0.0.1:5000/text-to-speech", {
+        /**await fetch("http://127.0.0.1:5000/text-to-speech", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: response["result"] }),
-        });
+        });*/
       } catch (err) {
         console.error("Auto-detect error:", err);
       }
     }, "image/jpeg");
   };
 
+  // 🔁 Auto-capture every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      captureFrame();
+      onAction && onAction();
+    }, 5000); // 5000 ms = 5 seconds
+
+    return () => clearInterval(interval); // cleanup when component unmounts
+  }, [onAction]);
+
   return (
       <div style={{ textAlign: "center" }}>
         <video ref={videoRef} autoPlay playsInline width="320" height="240" />
+
+        {/* Optional button for manual testing */}
         <div>
-          <button
-              className="capture-button"
-              onClick={() => {
-                captureFrame();
-                onAction && onAction();
-              }}
-          >
-            Capture Frame
+          <button className="capture-button" onClick={captureFrame}>
+            Capture Frame Manually
           </button>
         </div>
+
         {result && (
             <div style={{ marginTop: "1rem" }}>
               <strong>Auto-detect result:</strong>

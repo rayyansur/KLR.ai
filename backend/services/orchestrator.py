@@ -55,6 +55,17 @@ def process_auto_detect(image_path: str) -> dict:
 
         detections = yolo_results["Objects"]
         depth_data = positioner(image_path, detections)
+
+        dangerous = False
+
+        for obj in depth_data["collisionAnalysis"]:
+            print(obj["dangerLevel"])
+            if obj["dangerLevel"] == "CRITICAL_COLLISION" or obj["dangerLevel"] == "HIGH_WARNING":
+                dangerous = True
+                break
+
+        if not dangerous:
+            return {"result": "Not applicable"}
         print("[process_auto_detect] Depth data:", json.dumps(depth_data, indent=2))
 
         response_text = azure_auto_detect(

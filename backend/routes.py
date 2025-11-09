@@ -52,6 +52,10 @@ def handle_auto_detect():
     image_path = decode_base64_image(base64_image)
 
     result = process_auto_detect(image_path)
+    if result["result"] == "Not applicable":
+        return jsonify({"result": "Not applicable"}), 200
+
+    print("Dangerous")
 
     if image_path and os.path.exists(image_path):
         os.unlink(image_path)
