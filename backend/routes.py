@@ -2,11 +2,13 @@ import base64
 import os
 import tempfile
 from flask import Blueprint, jsonify, request
+from flask_cors import CORS
 
 from services.orchestrator import process_query, process_auto_detect
 
 
 routes = Blueprint('routes', __name__)
+CORS(routes)
 
 
 def decode_base64_image(base64_string: str) -> str:

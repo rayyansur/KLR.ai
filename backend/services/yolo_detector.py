@@ -7,7 +7,7 @@ load_dotenv()
 
 # Load YOLO model once at import
 MODEL_PATH = os.getenv("YOLO_MODEL_PATH")
-model = YOLO(MODEL_PATH, verbose=False)
+model = YOLO('yolov8n.pt', verbose=False)
 
 
 def yolo_detect(image_path: str):
