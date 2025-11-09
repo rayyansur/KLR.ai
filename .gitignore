@@ -4,3 +4,5 @@ __init__.py
 
 klr
 test_azure_ai.py
+
+*.pt
