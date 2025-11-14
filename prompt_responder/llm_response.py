@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+"""
 api_key = os.getenv("AZURE_OPENAI_API_KEY")
 deployment = os.getenv("MODEL_DEPLOYMENT_NAME")
 endpoint = "https://samjswag-6951-resource.cognitiveservices.azure.com/"
@@ -21,10 +22,7 @@ client = AzureOpenAI(
     api_key=api_key,
     timeout=120
 )
-
-ASSISTANT_ID_REGULAR = os.getenv("AGENT_REGULAR_ID")
-ASSISTANT_ID_AUTO_DETECT = os.getenv("AGENT_AUTO_DETECT_ID")
-
+"""
 
 # ---------------------------------------------------------------------
 # ✅ DEBUG HELPERS
@@ -86,6 +84,7 @@ def create_prompt(detections, depth_data, query, is_auto_detect):
 # ---------------------------------------------------------------------
 # AZURE CALL
 # ---------------------------------------------------------------------
+"""
 def ask_azure(prompt, assistant_id):
     print(f"[azure_ai_responder] Sending prompt to Azure (assistant_id={assistant_id})...")
 
@@ -111,6 +110,7 @@ def ask_azure(prompt, assistant_id):
         import traceback; traceback.print_exc()
         return f"Error while querying Azure: {e}"
 
+"""
 
 # ---------------------------------------------------------------------
 # ENTRY POINT
@@ -119,9 +119,9 @@ def get_response(detections, depth_data, query, is_auto_detect):
     log_json("Detections", detections)
     log_json("Depth Data", depth_data)
 
-    assistant_id = ASSISTANT_ID_AUTO_DETECT if is_auto_detect else ASSISTANT_ID_REGULAR
+    #assistant_id = ASSISTANT_ID_AUTO_DETECT if is_auto_detect else ASSISTANT_ID_REGULAR
     prompt = create_prompt(detections, depth_data, query, is_auto_detect)
-    response = ask_azure(prompt, assistant_id)
+    #response = ask_azure(prompt, assistant_id)
 
-    print("[azure_ai_responder] Final response text:", response)
-    return response
+    #print("[azure_ai_responder] Final response text:", response)
+    return prompt

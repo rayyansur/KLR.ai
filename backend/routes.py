@@ -8,7 +8,7 @@ from services.orchestrator import process_query, process_auto_detect
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from prompt_responder.text_to_speech import text_to_speech as tts
+from prompt_responder.text_to_speech import text_to_speech_2 as tts
 
 routes = Blueprint('routes', __name__)
 CORS(routes)
