@@ -75,3 +75,8 @@ def text_to_speech():
     text = data.get('text', '')
     audio_path = tts(text)
     return jsonify({"audio_path": audio_path})
+
+
+@routes.route('/hello', methods=['GET'])
+def hello():
+    return jsonify({"msg": "hello world"}), 200
